@@ -16,11 +16,16 @@ const CreatorSchema = new Schema({
   bio: { type: String, default: "" },
   socialScore: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
-  stats:{
+  donationsReceived: { type: Number, default: 0 },
+  stats: {
     treesPlanted: { type: Number, default: 0 },
     garbageCollected: { type: Number, default: 0 },
     waterSaved: { type: Number, default: 0 },
-  }
+  },
+  activities: [{
+    type: Schema.Types.ObjectId,
+    ref: "Activity"
+  }]
 });
 
 const Creator = model("Creator", CreatorSchema);

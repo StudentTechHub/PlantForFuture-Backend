@@ -3,9 +3,9 @@ import Creator from '../models/creator.js';
 import bcrypt from 'bcryptjs';
 import protectCreator from '../middleware/creator.middleware.js';
 
-const creatorRouter = express.Router();
+const volunteerRouter = express.Router();
 
-creatorRouter.post('/login', async (req, res) => {
+volunteerRouter.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
@@ -15,7 +15,7 @@ creatorRouter.post('/login', async (req, res) => {
     try {
         const creator = await Creator
             .findOne({ username })
-            .select('+hashedPassword');
+            .select('+password');
 
         if (!creator) {
             res.status(400).send('Invalid credentials');
@@ -36,7 +36,7 @@ creatorRouter.post('/login', async (req, res) => {
     }
 });
 
-creatorRouter.post('/register', async (req, res) => {
+volunteerRouter.post('/register', async (req, res) => {
     const { fullName, username, email, password, confirmPassword } = req.body;
 
     if (!fullName || !username || !email || !password || !confirmPassword) {
@@ -56,7 +56,7 @@ creatorRouter.post('/register', async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const newCreator = await Creator.create({ fullName, username, email, hashedPassword });
+        const newCreator = await Creator.create({ fullName, username, email, password: hashedPassword });
 
         generateTokenAndSetCookie(newCreator._id, res);
 
@@ -69,7 +69,7 @@ creatorRouter.post('/register', async (req, res) => {
     }
 });
 
-creatorRouter.post("/logout", (req, res) => {
+volunteerRouter.post("/logout", (req, res) => {
     try {
         res.cookie("token", "", { maxAge: 0 });
         res.status(200).json({ message: "Logged out" });
@@ -79,12 +79,12 @@ creatorRouter.post("/logout", (req, res) => {
     }
 })
 
-creatorRouter.post("/info", protectCreator, (req, res) => {
+volunteerRouter.post("/info", protectCreator, (req, res) => {
     const { socials, bio, profilePicture } = req.body;
-    
+
 })
 
-creatorRouter.get("/me", protectCreator, async (req, res) => {
+volunteerRouter.get("/me", protectCreator, async (req, res) => {
     try {
         const creator = await Creator.findById(req.creator._id);
         if (!creator) {
@@ -97,4 +97,4 @@ creatorRouter.get("/me", protectCreator, async (req, res) => {
     }
 })
 
-export default creatorRouter
+export default volunteerRouter

@@ -15,7 +15,8 @@ app.get('/helloworld', (req, res) => {
     res.send('Hello World');
 })
 
-app.use("/api/creator", creatorRouter);
+app.use("/api/v1/creator", creatorRouter);
+app.use("/api/v1/volunteer")
 
 app.listen(PORT, async () => {
     await connectDB();

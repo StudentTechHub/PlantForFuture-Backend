@@ -97,4 +97,62 @@ creatorRouter.get("/me", protectCreator, async (req, res) => {
     }
 })
 
+creatorRouter.get("/activities", protectCreator, async (req, res) => {
+    try {
+        const creator = await Creator.findById(req.creator._id).populate("activities");
+        if (!creator) {
+            res.status(404).send("Creator not found");
+        }
+        res.status(200).json(creator.activities);
+    } catch (e) {
+        console.log("Creator Activities Error:\n", e);
+        res.status(500).json({ error: e.message });
+    }
+})
+
+creatorRouter.get("/activity/:id", protectCreator, async (req, res) => {
+    try {
+        const creator = await Creator.findById(req.creator._id).populate("activities");
+        if (!creator) {
+            res.status(404).send("Creator not found");
+        }
+        const activity = creator.activities.find(activity => activity._id === req.params.id);
+        if (!activity) {
+            res.status(404).send("Activity not found");
+        }
+        res.status(200).json(activity);
+    } catch (e) {
+        console.log("Creator Activity Error:\n", e);
+        res.status(500).json({ error: e.message });
+    }
+})
+
+creatorRouter.post("/create-activity", protectCreator, async (req, res) => {
+    const { title, description, type, duration } = req.body;
+
+    if (!title || !description || !type || !duration) {
+        res.status(400).send('Please fill in all fields');
+    }
+
+    try {
+        const creator = await Creator.findById(req.creator._id);
+        if (!creator) {
+            res.status(404).send("Creator not found");
+        }
+        const newActivity = await Activity.create({
+            title,
+            description,
+            type,
+            duration,
+            creator: creator._id
+        });
+        creator.activities.push(newActivity._id);
+        await creator.save();
+        res.status(201).json(newActivity);
+    } catch (e) {
+        console.log("Creator Create Activity Error:\n", e);
+        res.status(500).json({ error: e.message });
+    }
+})
+
 export default creatorRouter
