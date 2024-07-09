@@ -10,7 +10,6 @@ const CreatorSchema = new Schema({
     twitter: { type: String, default: "" },
     instagram: { type: String, default: "" },
     facebook: { type: String, default: "" },
-    instagram: { type: String, default: "" },
     youtube: { type: String, default: "" },
   },
   bio: { type: String, default: "" },

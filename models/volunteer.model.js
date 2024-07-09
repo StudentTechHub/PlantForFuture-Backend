@@ -10,12 +10,11 @@ const VolunteerSchema = new Schema({
     twitter: { type: String, default: "" },
     instagram: { type: String, default: "" },
     facebook: { type: String, default: "" },
-    instagram: { type: String, default: "" },
     youtube: { type: String, default: "" },
   },
   bio: { type: String, default: "" },
   contributionScore: { type: Number, default: 0 },
-  recentContributions: [{
+  contributions: [{
     type: Schema.Types.ObjectId,
     ref: "Contribution",
   }],

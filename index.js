@@ -1,8 +1,10 @@
 import express, { json } from "express";
-import connectDB from "./db";
-import creatorRouter from "./routes/creator";
+import connectDB from "./db.js";
+import creatorRouter from "./routes/creator.route.js";
+import volunteerRouter from "./routes/volunteer.route.js";
 import cookieParser from "cookie-parser";
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 
@@ -16,7 +18,7 @@ app.get('/helloworld', (req, res) => {
 })
 
 app.use("/api/v1/creator", creatorRouter);
-app.use("/api/v1/volunteer")
+app.use("/api/v1/volunteer", volunteerRouter)
 
 app.listen(PORT, async () => {
     await connectDB();

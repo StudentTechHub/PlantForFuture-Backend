@@ -9,7 +9,8 @@ const ActivitySchema = new Schema({
   creator: { type: Schema.Types.ObjectId, ref: "Creator" },
   volunteers: [{ type: Schema.Types.ObjectId, ref: "Volunteer" }],
   // Duration in milliseconds
-  duration: { type: Number, required: true },
+  startDate: { type: Date, required: true },
+  endDate: { type: Date, required: true },
 });
 
 const Activity = model("Activity", ActivitySchema);

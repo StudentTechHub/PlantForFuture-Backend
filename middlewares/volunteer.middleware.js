@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-import Creator from "../models/creator.model.js";
+import Volunteer from "../models/volunteer.model.js";
 
-const protectCreator = async (req, res, next) => {
+const protectVolunteer = async (req, res, next) => {
 	try {
 		const token = req.cookies.token;
 
@@ -15,19 +15,19 @@ const protectCreator = async (req, res, next) => {
 			return res.status(401).json({ error: "Unauthorized - Invalid Token" });
 		}
 
-		const creator = await Creator.findById(decoded.userId).select("-password");
+		const volunteer = await Volunteer.findById(decoded.userId).select("-password");
 
-		if (!creator) {
+		if (!volunteer) {
 			return res.status(404).json({ error: "User not found" });
 		}
 
-		req.creator = creator;
+		req.volunteer = volunteer;
 
 		next();
 	} catch (error) {
-		console.log("Error in creator middleware: ", error.message);
+		console.log("Error in volunteer middleware: ", error.message);
 		res.status(500).json({ error: "Internal server error" });
 	}
 };
 
-export default protectCreator;
+export default protectVolunteer;
