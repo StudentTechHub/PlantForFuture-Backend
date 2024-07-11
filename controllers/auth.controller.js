@@ -38,10 +38,10 @@ export const creatorLogin = async (req, res) => {
 }
 
 export const creatorRegister = async (req, res) => {
-    const { fullName, username, email, password, confirmPassword } = req.body;
+    const { fullName, username, email, password, confirmPassword, gender } = req.body;
 
-    if (!fullName || !username || !email || !password || !confirmPassword) {
-        return res.status(400).json({ error: 'Please fill in all fields' });
+    if (!fullName || !username || !email || !password || !confirmPassword || !gender) {
+        return res.status(400).send('Please fill in all fields');
     }
 
     if (password !== confirmPassword) {
@@ -57,7 +57,7 @@ export const creatorRegister = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const newCreator = await Creator.create({ fullName, username, email, password: hashedPassword });
+        const newCreator = await Creator.create({ fullName, username, email, password: hashedPassword, gender });
 
         generateTokenAndSetCookie(newCreator._id, res);
 
@@ -116,9 +116,9 @@ export const volunteerLogin = async (req, res) => {
 }
 
 export const volunteerRegister = async (req, res) => {
-    const { fullName, username, email, password, confirmPassword } = req.body;
+    const { fullName, username, email, password, confirmPassword, gender } = req.body;
 
-    if (!fullName || !username || !email || !password || !confirmPassword) {
+    if (!fullName || !username || !email || !password || !confirmPassword || !gender) {
         return res.status(400).send('Please fill in all fields');
     }
 
@@ -135,7 +135,7 @@ export const volunteerRegister = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const newVolunteer = await Volunteer.create({ fullName, username, email, password: hashedPassword });
+        const newVolunteer = await Volunteer.create({ fullName, username, email, password: hashedPassword, gender });
 
         generateTokenAndSetCookie(newVolunteer._id, res);
 

@@ -2,7 +2,7 @@ import Volunteer from "../models/volunteer.model.js";
 import Activity from "../models/activity.model.js";
 
 export const updateVolunteerInfo = async (req, res) => {
-    const { fullName, socials, bio } = req.body;
+    const { fullName, socials, bio, gender } = req.body;
 
     try {
         const volunteer = await Volunteer.findById(req.volunteer._id);
@@ -17,6 +17,7 @@ export const updateVolunteerInfo = async (req, res) => {
         if (socials?.facebook) volunteer.socials.facebook = socials.facebook;
         if (socials?.youtube) volunteer.socials.youtube = socials.youtube;
         if (bio) volunteer.bio = bio;
+        if (gender) volunteer.gender = gender;
 
         await volunteer.save();
 
@@ -99,7 +100,7 @@ export const leaveActivity = async (req, res) => {
         if (!activity.volunteers.includes(req.volunteer._id)) {
             return res.status(400).json({ error: "Volunteer not joined this activity" });
         }
-        
+
         activity.volunteers = activity.volunteers.filter(volunteer => !volunteer.equals(req.volunteer._id));
 
         await activity.save();

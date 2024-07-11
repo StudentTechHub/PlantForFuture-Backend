@@ -26,6 +26,10 @@ app.get('/helloworld', (req, res) => {
     res.send('Hello World');
 })
 
+app.get('/', (req, res) => {
+    res.send('Hello World');
+});
+
 app.use("/api/v1/creator", creatorRouter);
 app.use("/api/v1/volunteer", volunteerRouter)
 

@@ -2,7 +2,7 @@ import Creator from '../models/creator.model.js';
 import Activity from '../models/activity.model.js';
 
 export const updateCreatorInfo = async (req, res) => {
-    const { fullName, socials, bio, stats } = req.body;
+    const { fullName, socials, bio, stats, gender } = req.body;
 
     try {
         const creator = await Creator.findById(req.creator._id);
@@ -19,6 +19,7 @@ export const updateCreatorInfo = async (req, res) => {
         if (stats?.treesPlanted) creator.stats.treesPlanted = stats.treesPlanted;
         if (stats?.garbageCollected) creator.stats.garbageCollected = stats.garbageCollected;
         if (stats?.waterSaved) creator.stats.waterSaved = stats.waterSaved;
+        if (gender) creator.gender = gender;
 
         await creator.save();
 
