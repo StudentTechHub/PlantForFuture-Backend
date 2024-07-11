@@ -28,6 +28,8 @@ app.use(json());
 app.use(cookieParser());
 app.use(cors(corsOptions)); // Add this line
 
+app.options('*', cors(corsOptions))
+
 app.get('/helloworld', (req, res) => {
     res.send('Hello World');
 })
