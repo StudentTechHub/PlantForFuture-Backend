@@ -8,8 +8,14 @@ import cors from 'cors'; // Add this line
 dotenv.config();
 
 // CORS configuration
+const allowedOrigins = ['http://localhost:3000', 'https://plantforfuture.netlify.app/'];
+
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: (origin, callback) => {
+        (allowedOrigins.includes(origin) || !origin)
+            ? callback(null, true)
+            : callback(new Error('Not allowed by CORS'));
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 };
