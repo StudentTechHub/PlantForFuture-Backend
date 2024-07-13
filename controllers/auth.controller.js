@@ -25,7 +25,7 @@ export const creatorLogin = async (req, res) => {
             return res.status(400).send('Invalid credentials');
         }
 
-        generateTokenAndSetCookie(creator._id, res);
+        generateTokenAndSetCookie(creator._id, true, res);
 
         const creatorData = creator.toObject();
         delete creatorData.password;
@@ -59,7 +59,7 @@ export const creatorRegister = async (req, res) => {
 
         const newCreator = await Creator.create({ fullName, username, email, password: hashedPassword, gender });
 
-        generateTokenAndSetCookie(newCreator._id, res);
+        generateTokenAndSetCookie(newCreator._id, true, res);
 
         await newCreator.save();
 
@@ -103,7 +103,7 @@ export const volunteerLogin = async (req, res) => {
             return res.status(400).json({ error: 'Invalid credentials' });
         }
 
-        generateTokenAndSetCookie(volunteer._id, res);
+        generateTokenAndSetCookie(volunteer._id, false, res);
 
         const volunteerData = volunteer.toObject();
         delete volunteerData.password
@@ -137,7 +137,7 @@ export const volunteerRegister = async (req, res) => {
 
         const newVolunteer = await Volunteer.create({ fullName, username, email, password: hashedPassword, gender });
 
-        generateTokenAndSetCookie(newVolunteer._id, res);
+        generateTokenAndSetCookie(newVolunteer._id, false, res);
 
         await newVolunteer.save();
 

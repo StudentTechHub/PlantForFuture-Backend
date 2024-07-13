@@ -11,11 +11,14 @@ dotenv.config();
 const allowedOrigins = ['http://localhost:3000', 'https://plantforfuture.netlify.app/'];
 
 const corsOptions = {
-    origin: (origin, callback) => {
-        (allowedOrigins.includes(origin) || !origin)
-            ? callback(null, true)
-            : callback(new Error('Not allowed by CORS'));
-    },
+    // origin: (origin, callback) => {
+    //     if (allowedOrigins.includes(origin) || !origin) {
+    //         callback(null, true);
+    //     } else {
+    //         callback(new Error('Not allowed by CORS'));
+    //     }
+    // },
+    origin: "http://localhost:3000",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 };
