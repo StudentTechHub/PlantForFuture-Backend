@@ -3,7 +3,7 @@ import Volunteer from "../models/volunteer.model.js";
 
 const protectVolunteer = async (req, res, next) => {
 	try {
-		const token = req.cookies.token;
+		const token = req.cookies._volunteer_token;
 
 		if (!token) {
 			return res.status(401).json({ error: "Unauthorized - No Token Provided" });

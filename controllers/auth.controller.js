@@ -75,7 +75,7 @@ export const creatorRegister = async (req, res) => {
 
 export const creatorLogout = async (req, res) => {
     try {
-        res.cookie("token", "", { maxAge: 0 });
+        res.cookie("_creator_token", "", { maxAge: 0 });
         return res.status(200).json({ message: "Logged out" });
     } catch (error) {
         console.log("Creator Logout Error:\n", error);
@@ -153,7 +153,7 @@ export const volunteerRegister = async (req, res) => {
 
 export const volunteerLogout = async (req, res) => {
     try {
-        res.cookie("token", "", { maxAge: 0 });
+        res.cookie("_volunteer_token", "", { maxAge: 0 });
         return res.status(200).json({ message: "Logged out" });
     } catch (error) {
         console.log("Creator Logout Error:\n", error);

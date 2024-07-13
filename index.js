@@ -31,7 +31,13 @@ app.use(json());
 app.use(cookieParser());
 app.use(cors(corsOptions)); // Add this line
 
-app.options('*', cors(corsOptions))
+app.use((req, res, next) => {
+    // Log incoming requests
+    console.log(`${req.method} ${req.originalUrl}`);
+    next();
+})
+
+// app.options('*', cors(corsOptions))
 
 app.get('/helloworld', (req, res) => {
     res.send('Hello World');
