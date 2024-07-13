@@ -30,6 +30,7 @@ export const creatorLogin = async (req, res) => {
         const creatorData = creator.toObject();
         delete creatorData.password;
 
+        res.redirect('/src/dashboard/creatorDashboard/');
         return res.status(200).json(creatorData);
     } catch (error) {
         console.log("Creator Login Error:\n", error);
@@ -66,6 +67,7 @@ export const creatorRegister = async (req, res) => {
         const creator = newCreator.toObject();
         delete creator.password;
 
+        res.redirect('/src/dashboard/creatorDashboard/');
         return res.status(201).json(creator);
     } catch (error) {
         console.log("Creator Register Error:\n", error);
@@ -76,6 +78,7 @@ export const creatorRegister = async (req, res) => {
 export const creatorLogout = async (req, res) => {
     try {
         res.cookie("_creator_token", "", { maxAge: 0 });
+        res.redirect('/joinUs/');
         return res.status(200).json({ message: "Logged out" });
     } catch (error) {
         console.log("Creator Logout Error:\n", error);
@@ -108,6 +111,7 @@ export const volunteerLogin = async (req, res) => {
         const volunteerData = volunteer.toObject();
         delete volunteerData.password
 
+        res.redirect('/src/dashboard/volunteerDashboard/');
         return res.status(200).json(volunteerData);
     } catch (error) {
         console.log("Volunteer Login Error:\n", error);
@@ -144,6 +148,7 @@ export const volunteerRegister = async (req, res) => {
         const volunteer = newVolunteer.toObject();
         delete volunteer.password;
 
+        res.redirect('/src/dashboard/volunteerDashboard/');
         return res.status(201).json(volunteer);
     } catch (error) {
         console.log("Creator Register Error:\n", error);
@@ -154,6 +159,7 @@ export const volunteerRegister = async (req, res) => {
 export const volunteerLogout = async (req, res) => {
     try {
         res.cookie("_volunteer_token", "", { maxAge: 0 });
+        res.redirect('/joinUs/');
         return res.status(200).json({ message: "Logged out" });
     } catch (error) {
         console.log("Creator Logout Error:\n", error);
