@@ -8,7 +8,7 @@ export const updateVolunteerInfo = async (req, res) => {
         const volunteer = await Volunteer.findById(req.volunteer._id);
 
         if (!volunteer) {
-            res.status(404).json({ error: "Volunteer not found" });
+            return res.status(404).json({ error: "Volunteer not found" });
         }
 
         if (fullName) volunteer.fullName = fullName;
@@ -24,10 +24,10 @@ export const updateVolunteerInfo = async (req, res) => {
         const volunteerData = volunteer.toObject();
         delete volunteerData.password
 
-        res.status(200).json(volunteerData);
+        return res.status(200).json(volunteerData);
     } catch (error) {
         console.log("Update Volunteer Info Error:\n", error);
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 }
 
@@ -35,16 +35,16 @@ export const getVolunteerInfo = async (req, res) => {
     try {
         const volunteer = await Volunteer.findById(req.volunteer._id);
         if (!volunteer) {
-            res.status(404).json({ error: "Volunteer not found" });
+            return res.status(404).json({ error: "Volunteer not found" });
         }
 
         const volunteerData = volunteer.toObject();
         delete volunteerData.password;
 
-        res.status(200).json(volunteerData);
+        return res.status(200).json(volunteerData);
     } catch (error) {
         console.log("Get Volunteer Info Error:\n", error);
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 }
 
@@ -53,13 +53,13 @@ export const getVolunteerActivities = async (req, res) => {
         const activities = await Activity.find({ volunteers: { $elemMatch: { $eq: req.volunteer._id } } });
 
         if (!activities) {
-            res.status(404).json({ error: "Activities not found" });
+            return res.status(404).json({ error: "Activities not found" });
         }
 
-        res.status(200).json(activities);
+        return res.status(200).json(activities);
     } catch (error) {
         console.log("Get Volunteer Activities Error:\n", error);
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 }
 
@@ -70,7 +70,7 @@ export const joinActivity = async (req, res) => {
         const activity = await Activity.findById(id);
 
         if (!activity) {
-            res.status(404).json({ error: "Activity not found" });
+            return res.status(404).json({ error: "Activity not found" });
         }
 
         if (activity.volunteers.includes(req.volunteer._id)) {
@@ -80,10 +80,10 @@ export const joinActivity = async (req, res) => {
         activity.volunteers.push(req.volunteer._id);
         await activity.save();
 
-        res.status(200).json(activity);
+        return res.status(200).json(activity);
     } catch (error) {
         console.log("Join Activity Error:\n", error);
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 }
 
@@ -106,10 +106,10 @@ export const leaveActivity = async (req, res) => {
         await activity.save();
         console.log("Activity after leaving: ", activity);
 
-        res.status(200).json(activity);
+        return res.status(200).json(activity);
 
     } catch (error) {
         console.log("Leave Activity Error:\n", error);
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 }

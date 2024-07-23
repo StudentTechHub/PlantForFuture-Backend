@@ -9,13 +9,13 @@ export const getActivity = async (req, res) => {
             .populate("volunteers");
 
         if (!activity) {
-            res.status(404).json({ error: "Activity not found" });
+            return res.status(404).json({ error: "Activity not found" });
         }
 
-        res.status(200).json(activity);
+        return res.status(200).json(activity);
     } catch (error) {
         console.log("Get Activity Error:\n", error);
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 }
 
@@ -30,13 +30,13 @@ export const getUpcomingActivities = async (req, res) => {
             .populate("volunteers");
 
         if (!activities) {
-            res.status(404).json({ error: "Activities not found" });
+            return res.status(404).json({ error: "Activities not found" });
         }
 
-        res.status(200).json(activities);
+        return res.status(200).json(activities);
     } catch (error) {
         console.log("Get Upcoming Activities Error:\n", error);
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 }
 
@@ -52,12 +52,12 @@ export const getRecentActivities = async (req, res) => {
             .populate("volunteers");
 
         if (!activities) {
-            res.status(404).json({ error: "Activities not found" });
+            return res.status(404).json({ error: "Activities not found" });
         }
 
-        res.status(200).json(activities);
+        return res.status(200).json(activities);
     } catch (error) {
         console.log("Get Recent Activities Error:\n", error);
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 }

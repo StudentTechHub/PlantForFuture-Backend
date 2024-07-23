@@ -85,7 +85,7 @@ export const createActivity = async (req, res) => {
     const { title, description, type, startDate, endDate, location } = req.body;
 
     if (!title || !description || !type || !startDate || !endDate || !location) {
-        res.status(400).send("Missing required fields");
+        return res.status(400).send("Missing required fields");
     }
 
     try {
