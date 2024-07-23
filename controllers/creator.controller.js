@@ -7,7 +7,7 @@ export const updateCreatorInfo = async (req, res) => {
     try {
         const creator = await Creator.findById(req.creator._id);
         if (!creator) {
-            res.status(404).send("Creator not found");
+            return res.status(404).send("Creator not found");
         }
 
         if (fullName) creator.fullName = fullName;
@@ -26,10 +26,10 @@ export const updateCreatorInfo = async (req, res) => {
         const creatorData = creator.toObject();
         delete creatorData.password;
 
-        res.status(200).json(creatorData);
+        return res.status(200).json(creatorData);
     } catch (e) {
         console.log("Update Creator Info Error:\n", e);
-        res.status(500).json({ error: e.message });
+        return res.status(500).json({ error: e.message });
     }
 }
 
@@ -37,16 +37,16 @@ export const getCreatorInfo = async (req, res) => {
     try {
         const creator = await Creator.findById(req.creator._id);
         if (!creator) {
-            res.status(404).send("Creator not found");
+            return res.status(404).send("Creator not found");
         }
 
         const creatorData = creator.toObject();
         delete creatorData.password;
 
-        res.status(200).json(creatorData);
+        return res.status(200).json(creatorData);
     } catch (e) {
         console.log("Creator Info Error:\n", e);
-        res.status(500).json({ error: e.message });
+        return res.status(500).json({ error: e.message });
     }
 }
 
@@ -54,13 +54,13 @@ export const getCreatorActivities = async (req, res) => {
     try {
         const creator = await Creator.findById(req.creator._id).populate("activities");
         if (!creator) {
-            res.status(404).send("Creator not found");
+            return res.status(404).send("Creator not found");
         }
 
-        res.status(200).json(creator.activities);
+        return res.status(200).json(creator.activities);
     } catch (error) {
         console.log("Get Creator Activities Error:\n", error);
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 }
 
@@ -71,13 +71,13 @@ export const getCreatorActivity = async (req, res) => {
         const activity = await Activity.findById(id).populate("creator").populate("volunteers");
 
         if (!activity) {
-            res.status(404).send("Activity not found");
+            return res.status(404).send("Activity not found");
         }
 
-        res.status(200).json(activity);
+        return res.status(200).json(activity);
     } catch (e) {
         console.log("Get Creator Activity Error:\n", e);
-        res.status(500).json({ error: e.message });
+        return res.status(500).json({ error: e.message });
     }
 }
 
@@ -91,7 +91,7 @@ export const createActivity = async (req, res) => {
     try {
         const creator = await Creator.findById(req.creator._id);
         if (!creator) {
-            res.status(404).send("Creator not found");
+            return res.status(404).send("Creator not found");
         }
 
         const newActivity = new Activity({
@@ -109,10 +109,10 @@ export const createActivity = async (req, res) => {
         await creator.save();
         await newActivity.save();
 
-        res.status(201).json(newActivity);
+        return res.status(201).json(newActivity);
     } catch (e) {
         console.log("Create Activity Error:\n", e);
-        res.status(500).json({ error: e.message });
+        return res.status(500).json({ error: e.message });
     }
 }
 
@@ -122,16 +122,16 @@ export const deleteActivity = async (req, res) => {
     try {
         const activity = await Activity.findById(id);
         if (!activity) {
-            res.status(404).send("Activity not found");
+            return res.status(404).send("Activity not found");
         }
 
         const creator = await Creator.findById(req.creator._id);
         if (!creator) {
-            res.status(404).send("Creator not found");
+            return res.status(404).send("Creator not found");
         }
 
         if (activity.creator.toString() !== req.creator._id) {
-            res.status(403).send("Unauthorized");
+            return res.status(403).send("Unauthorized");
         }
 
         creator.activities = creator.activities.filter(activityId => activityId.toString() !== id);
@@ -139,10 +139,10 @@ export const deleteActivity = async (req, res) => {
         await creator.save();
         await activity.delete();
 
-        res.status(200).send("Activity deleted");
+        return res.status(200).send("Activity deleted");
     } catch (e) {
         console.log("Delete Activity Error:\n", e);
-        res.status(500).json({ error: e.message });
+        return res.status(500).json({ error: e.message });
     }
 }
 
@@ -153,11 +153,11 @@ export const updateActivity = async (req, res) => {
     try {
         const activity = await Activity.findById(id);
         if (!activity) {
-            res.status(404).send("Activity not found");
+            return res.status(404).send("Activity not found");
         }
 
         if (activity.creator.toString() !== req.creator._id) {
-            res.status(403).send("Unauthorized");
+            return res.status(403).send("Unauthorized");
         }
 
         if (title) activity.title = title;
@@ -169,9 +169,9 @@ export const updateActivity = async (req, res) => {
 
         await activity.save();
 
-        res.status(200).json(activity);
+        return res.status(200).json(activity);
     } catch (e) {
         console.log("Update Activity Error:\n", e);
-        res.status(500).json({ error: e.message });
+        return res.status(500).json({ error: e.message });
     }
 }
