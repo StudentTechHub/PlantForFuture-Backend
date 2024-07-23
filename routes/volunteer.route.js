@@ -1,7 +1,7 @@
 import express from 'express';
 import protectVolunteer from '../middlewares/volunteer.middleware.js';
 import { volunteerLogin, volunteerLogout, volunteerRegister } from '../controllers/auth.controller.js';
-import { getVolunteerInfo, updateVolunteerInfo, joinActivity, leaveActivity, getVolunteerActivities } from '../controllers/volunteer.controller.js';
+import { getVolunteerInfo, updateVolunteerInfo, joinActivity, leaveActivity, getVolunteerActivities, getActivity } from '../controllers/volunteer.controller.js';
 
 const volunteerRouter = express.Router();
 
@@ -14,5 +14,6 @@ volunteerRouter.get("/me", protectVolunteer, getVolunteerInfo)
 volunteerRouter.get("/my-activities", protectVolunteer, getVolunteerActivities)
 volunteerRouter.post("/activity/:id/join", protectVolunteer, joinActivity)
 volunteerRouter.post("/activity/:id/leave", protectVolunteer, leaveActivity)
+volunteerRouter.get("/activity/:id", protectVolunteer, getActivity)
 
 export default volunteerRouter;
