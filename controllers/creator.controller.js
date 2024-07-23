@@ -115,3 +115,63 @@ export const createActivity = async (req, res) => {
         res.status(500).json({ error: e.message });
     }
 }
+
+export const deleteActivity = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const activity = await Activity.findById(id);
+        if (!activity) {
+            res.status(404).send("Activity not found");
+        }
+
+        const creator = await Creator.findById(req.creator._id);
+        if (!creator) {
+            res.status(404).send("Creator not found");
+        }
+
+        if (activity.creator.toString() !== req.creator._id) {
+            res.status(403).send("Unauthorized");
+        }
+
+        creator.activities = creator.activities.filter(activityId => activityId.toString() !== id);
+
+        await creator.save();
+        await activity.delete();
+
+        res.status(200).send("Activity deleted");
+    } catch (e) {
+        console.log("Delete Activity Error:\n", e);
+        res.status(500).json({ error: e.message });
+    }
+}
+
+export const updateActivity = async (req, res) => {
+    const { id } = req.params;
+    const { title, description, type, startDate, endDate, location } = req.body;
+
+    try {
+        const activity = await Activity.findById(id);
+        if (!activity) {
+            res.status(404).send("Activity not found");
+        }
+
+        if (activity.creator.toString() !== req.creator._id) {
+            res.status(403).send("Unauthorized");
+        }
+
+        if (title) activity.title = title;
+        if (description) activity.description = description;
+        if (type) activity.type = type;
+        if (startDate) activity.startDate = startDate;
+        if (endDate) activity.endDate = endDate;
+        if (location) activity.location = location;
+
+        await activity.save();
+
+        res.status(200).json(activity);
+    } catch (e) {
+        console.log("Update Activity Error:\n", e);
+        res.status(500).json({ error: e.message });
+    }
+}

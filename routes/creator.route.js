@@ -1,7 +1,7 @@
 import express from 'express';
 import protectCreator from '../middlewares/creator.middleware.js';
 import { creatorLogin, creatorLogout, creatorRegister } from '../controllers/auth.controller.js';
-import { createActivity, getCreatorActivities, getCreatorActivity, getCreatorInfo, updateCreatorInfo } from '../controllers/creator.controller.js';
+import { createActivity, getCreatorActivities, getCreatorActivity, getCreatorInfo, updateCreatorInfo, deleteActivity, updateActivity } from '../controllers/creator.controller.js';
 
 const creatorRouter = express.Router();
 
@@ -15,5 +15,7 @@ creatorRouter.get("/me", protectCreator, getCreatorInfo)
 creatorRouter.get("/activities", protectCreator, getCreatorActivities)
 creatorRouter.get("/activity/:id", protectCreator, getCreatorActivity)
 creatorRouter.post("/create-activity", protectCreator, createActivity)
+creatorRouter.delete("/activity/:id", protectCreator, deleteActivity)
+creatorRouter.post("/update-activity/:id", protectCreator, updateActivity)
 
 export default creatorRouter;
