@@ -1,5 +1,5 @@
 import express from "express";
-import { getActivity, getRecentActivities, getUpcomingActivities } from "../controllers/activity.controller";
+import { getActivity, getRecentActivities, getUpcomingActivities } from "../controllers/activity.controller.js";
 
 const activityRouter = express.Router();
 
