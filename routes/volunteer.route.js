@@ -14,6 +14,6 @@ volunteerRouter.get("/me", protectVolunteer, getVolunteerInfo)
 volunteerRouter.get("/my-activities", protectVolunteer, getVolunteerActivities)
 volunteerRouter.post("/activity/:id/join", protectVolunteer, joinActivity)
 volunteerRouter.post("/activity/:id/leave", protectVolunteer, leaveActivity)
-volunteerRouter.get("/activity/:id", protectVolunteer, getActivity)
+volunteerRouter.get("/activity/:id", getActivity)
 
 export default volunteerRouter;

@@ -63,25 +63,6 @@ export const getVolunteerActivities = async (req, res) => {
     }
 }
 
-export const getActivity = async (req, res) => {
-    const { id } = req.params;
-
-    try {
-        const activity = await Activity.findById(id)
-            .populate("creator")
-            .populate("volunteers");
-
-        if (!activity) {
-            res.status(404).json({ error: "Activity not found" });
-        }
-
-        res.status(200).json(activity);
-    } catch (error) {
-        console.log("Get Activity Error:\n", error);
-        res.status(500).json({ error: error.message });
-    }
-}
-
 export const joinActivity = async (req, res) => {
     const { id } = req.params;
 

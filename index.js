@@ -5,6 +5,7 @@ import volunteerRouter from "./routes/volunteer.route.js";
 import cookieParser from "cookie-parser";
 import dotenv from 'dotenv';
 import cors from 'cors'; // Add this line
+import activityRouter from "./routes/activity.route.js";
 dotenv.config();
 
 // CORS configuration
@@ -49,6 +50,7 @@ app.get('/', (req, res) => {
 
 app.use("/api/v1/creator", creatorRouter);
 app.use("/api/v1/volunteer", volunteerRouter)
+app.use("/api/v1/activity", activityRouter)
 
 app.listen(PORT, async () => {
     await connectDB();
