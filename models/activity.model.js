@@ -8,6 +8,7 @@ const ActivitySchema = new Schema({
   title: { type: String, required: true },
   creator: { type: Schema.Types.ObjectId, ref: "Creator" },
   volunteers: [{ type: Schema.Types.ObjectId, ref: "Volunteer" }],
+  location: {type: String, required:true},
   // Duration in milliseconds
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },

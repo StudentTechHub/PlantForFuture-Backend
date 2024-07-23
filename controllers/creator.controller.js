@@ -82,9 +82,9 @@ export const getCreatorActivity = async (req, res) => {
 }
 
 export const createActivity = async (req, res) => {
-    const { title, description, type, startDate, endDate } = req.body;
+    const { title, description, type, startDate, endDate, location } = req.body;
 
-    if (!title || !description || !type || !startDate || !endDate) {
+    if (!title || !description || !type || !startDate || !endDate || !location) {
         res.status(400).send("Missing required fields");
     }
 
@@ -100,6 +100,7 @@ export const createActivity = async (req, res) => {
             type,
             startDate,
             endDate,
+            location,
             creator: req.creator._id
         });
 
