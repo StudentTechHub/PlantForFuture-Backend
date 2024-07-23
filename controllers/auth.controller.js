@@ -30,8 +30,7 @@ export const creatorLogin = async (req, res) => {
         const creatorData = creator.toObject();
         delete creatorData.password;
 
-        res.redirect('/src/dashboard/creatorDashboard/');
-        return res.status(200).json(creatorData);
+        return res.status(200).json(creatorData).redirect('/src/dashboard/creatorDashboard/')
     } catch (error) {
         console.log("Creator Login Error:\n", error);
         return res.status(500).json({ error: error.message });
@@ -67,8 +66,7 @@ export const creatorRegister = async (req, res) => {
         const creator = newCreator.toObject();
         delete creator.password;
 
-        res.redirect('/src/dashboard/creatorDashboard/');
-        return res.status(201).json(creator);
+        return res.status(201).json(creator).redirect('/src/dashboard/creatorDashboard/');
     } catch (error) {
         console.log("Creator Register Error:\n", error);
         return res.status(500).json({ error: error.message });
@@ -77,9 +75,11 @@ export const creatorRegister = async (req, res) => {
 
 export const creatorLogout = async (req, res) => {
     try {
-        res.cookie("_creator_token", "", { maxAge: 0 });
-        res.redirect('/joinUs/');
-        return res.status(200).json({ message: "Logged out" });
+        return res
+            .status(200)
+            .cookie("_creator_token", "", { maxAge: 0 })
+            .json({ message: "Logged out" })
+            .redirect('/joinUs/');
     } catch (error) {
         console.log("Creator Logout Error:\n", error);
         return res.status(500).json({ error: error.message });
@@ -111,8 +111,7 @@ export const volunteerLogin = async (req, res) => {
         const volunteerData = volunteer.toObject();
         delete volunteerData.password
 
-        res.redirect('/src/dashboard/volunteerDashboard/');
-        return res.status(200).json(volunteerData);
+        return res.status(200).json(volunteerData).redirect('/src/dashboard/volunteerDashboard/');
     } catch (error) {
         console.log("Volunteer Login Error:\n", error);
         return res.status(500).json({ error: error.message });
@@ -148,8 +147,7 @@ export const volunteerRegister = async (req, res) => {
         const volunteer = newVolunteer.toObject();
         delete volunteer.password;
 
-        res.redirect('/src/dashboard/volunteerDashboard/');
-        return res.status(201).json(volunteer);
+        return res.status(201).json(volunteer).redirect('/src/dashboard/volunteerDashboard/');
     } catch (error) {
         console.log("Creator Register Error:\n", error);
         return res.status(500).json({ error: error.message });
@@ -158,9 +156,11 @@ export const volunteerRegister = async (req, res) => {
 
 export const volunteerLogout = async (req, res) => {
     try {
-        res.cookie("_volunteer_token", "", { maxAge: 0 });
-        res.redirect('/joinUs/');
-        return res.status(200).json({ message: "Logged out" });
+        return res
+            .status(200)
+            .cookie("_volunteer_token", "", { maxAge: 0 })
+            .redirect('/joinUs/')
+            .json({ message: "Logged out" });
     } catch (error) {
         console.log("Creator Logout Error:\n", error);
         return res.status(500).json({ error: error.message });
