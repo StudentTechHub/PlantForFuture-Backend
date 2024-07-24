@@ -130,10 +130,6 @@ export const deleteActivity = async (req, res) => {
             return res.status(404).send("Creator not found");
         }
 
-        if (activity.creator.toString() !== req.creator._id) {
-            return res.status(403).send("Unauthorized");
-        }
-
         creator.activities = creator.activities.filter(activityId => activityId.toString() !== id);
 
         await creator.save();
