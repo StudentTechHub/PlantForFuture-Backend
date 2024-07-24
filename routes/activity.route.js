@@ -3,7 +3,7 @@ import { getActivity, getRecentActivities, getUpcomingActivities } from "../cont
 
 const activityRouter = express.Router();
 
-activityRouter.get("/:id", getActivity);
+activityRouter.get("/get/:id", getActivity);
 activityRouter.get("/upcoming", getUpcomingActivities);
 activityRouter.get("/recent", getRecentActivities);
 
