@@ -19,7 +19,7 @@ const corsOptions = {
     //         callback(new Error('Not allowed by CORS'));
     //     }
     // },
-    origin: "http://localhost:3000",
+    origin: "https://plantforfuture.netlify.app/",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 };
