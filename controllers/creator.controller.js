@@ -7,7 +7,7 @@ export const updateCreatorInfo = async (req, res) => {
     try {
         const creator = await Creator.findById(req.creator._id);
         if (!creator) {
-            return res.status(404).send("Creator not found");
+            return res.status(404).json({ message: "Creator not found" });
         }
 
         if (fullName) creator.fullName = fullName;
@@ -37,7 +37,7 @@ export const getCreatorInfo = async (req, res) => {
     try {
         const creator = await Creator.findById(req.creator._id);
         if (!creator) {
-            return res.status(404).send("Creator not found");
+            return res.status(404).json({ message: "Creator not found" });
         }
 
         const creatorData = creator.toObject();
@@ -54,7 +54,7 @@ export const getCreatorActivities = async (req, res) => {
     try {
         const creator = await Creator.findById(req.creator._id).populate("activities");
         if (!creator) {
-            return res.status(404).send("Creator not found");
+            return res.status(404).json({ message: "Creator not found" });
         }
 
         return res.status(200).json(creator.activities);
@@ -71,7 +71,7 @@ export const getCreatorActivity = async (req, res) => {
         const activity = await Activity.findById(id).populate("creator").populate("volunteers");
 
         if (!activity) {
-            return res.status(404).send("Activity not found");
+            return res.status(404).json({ message: "Activity not found" });
         }
 
         return res.status(200).json(activity);
@@ -85,13 +85,13 @@ export const createActivity = async (req, res) => {
     const { title, description, type, startDate, endDate, location } = req.body;
 
     if (!title || !description || !type || !startDate || !endDate || !location) {
-        return res.status(400).send("Missing required fields");
+        return res.status(400).json({ message: "Missing required fields" });
     }
 
     try {
         const creator = await Creator.findById(req.creator._id);
         if (!creator) {
-            return res.status(404).send("Creator not found");
+            return res.status(404).json({ message: "Creator not found" });
         }
 
         const newActivity = new Activity({
@@ -122,20 +122,20 @@ export const deleteActivity = async (req, res) => {
     try {
         const activity = await Activity.findById(id);
         if (!activity) {
-            return res.status(404).send("Activity not found");
+            return res.status(404).json({ message: "Activity not found" });
         }
 
         const creator = await Creator.findById(req.creator._id);
         if (!creator) {
-            return res.status(404).send("Creator not found");
+            return res.status(404).json({ message: "Creator not found" });
         }
 
         creator.activities = creator.activities.filter(activityId => activityId.toString() !== id);
 
         await creator.save();
-        await activity.delete();
+        await activity.save();
 
-        return res.status(200).send("Activity deleted");
+        return res.status(200).json({ message: "Activity deleted" });
     } catch (e) {
         console.log("Delete Activity Error:\n", e);
         return res.status(500).json({ error: e.message });
@@ -149,11 +149,11 @@ export const updateActivity = async (req, res) => {
     try {
         const activity = await Activity.findById(id);
         if (!activity) {
-            return res.status(404).send("Activity not found");
+            return res.status(404).json({ message: "Activity not found" });
         }
 
-        if (activity.creator.toString() !== req.creator._id) {
-            return res.status(403).send("Unauthorized");
+        if (!activity.creator._id.equals(req.creator._id)) {
+            return res.status(403).json({ message: "Unauthorized" });
         }
 
         if (title) activity.title = title;
