@@ -21,7 +21,8 @@ const corsOptions = {
     // },
     origin: "https://plantforfuture.netlify.app",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 };
 
 const app = express();
@@ -30,7 +31,7 @@ const PORT = process.env.PORT || 3001;
 
 app.use(json());
 app.use(cookieParser());
-app.use(cors(corsOptions)); // Add this line
+app.use(cors(corsOptions));
 
 app.use((req, res, next) => {
     // Log incoming requests
