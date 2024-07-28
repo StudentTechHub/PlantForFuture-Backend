@@ -31,7 +31,9 @@ const PORT = process.env.PORT || 3001;
 
 app.use(json());
 app.use(cookieParser());
-app.use(cors(corsOptions));
+app.use(cors({
+    ...corsOptions,
+}));
 
 app.use((req, res, next) => {
     // Log incoming requests
