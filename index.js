@@ -8,17 +8,7 @@ import cors from 'cors'; // Add this line
 import activityRouter from "./routes/activity.route.js";
 dotenv.config();
 
-// CORS configuration
-const allowedOrigins = ['http://localhost:3000', 'https://plantforfuture.netlify.app/'];
-
 const corsOptions = {
-    // origin: (origin, callback) => {
-    //     if (allowedOrigins.includes(origin) || !origin) {
-    //         callback(null, true);
-    //     } else {
-    //         callback(new Error('Not allowed by CORS'));
-    //     }
-    // },
     origin: "https://plantforfuture.netlify.app",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -29,11 +19,12 @@ const app = express();
 
 const PORT = process.env.PORT || 3001;
 
-app.use(json());
-app.use(cookieParser());
 app.use(cors({
     ...corsOptions,
 }));
+
+app.use(json());
+app.use(cookieParser());
 
 app.use((req, res, next) => {
     // Log incoming requests
