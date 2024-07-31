@@ -11,8 +11,8 @@ import Creator from '../models/creator.model.js';
 dotenv.config();
 
 const corsOptions = {
-    origin: "https://plantforfuture.netlify.app",
-    // origin: ["http://localhost:3000", "https://plantforfuture.netlify.app"],
+    // origin: "https://plantforfuture.netlify.app",   // <---- Useless code
+    origin: ["http://localhost:3000", "https://plantforfuture.netlify.app"],
     default: "https://plantforfuture.netlify.app",
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -34,7 +34,8 @@ app.use((req, res, next) => {
     // Log incoming requests
     console.log(`${req.method} ${req.originalUrl}`);
 
-    const origin = corsOptions.origin.includes(req.header('origin').toLowerCase()) ? req.headers.origin : corsOptions.default;
+    // const origin = corsOptions.origin.includes(req.header('origin').toLowerCase()) ? req.headers.origin : corsOptions.default;
+    const origin = corsOptions.default;
     res.header("Access-Control-Allow-Origin", origin);
     res.header("Access-Control-Allow-Methods", corsOptions.methods.join(','));
     res.header("Access-Control-Allow-Headers", corsOptions.allowedHeaders.join(','));
