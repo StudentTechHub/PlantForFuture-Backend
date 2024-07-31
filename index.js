@@ -8,6 +8,7 @@ import cors from 'cors';
 import activityRouter from "./routes/activity.route.js";
 import Volunteer from "./models/volunteer.model.js";
 import Creator from './models/creator.model.js';
+import jwt from 'jsonwebtoken';
 dotenv.config();
 
 // const corsOptions = {
