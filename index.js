@@ -65,28 +65,6 @@ app.use("/api/v1/creator", creatorRouter);
 app.use("/api/v1/volunteer", volunteerRouter)
 app.use("/api/v1/activity", activityRouter)
 
-app.get('/api/v1/check_login', async (req, res, next) => {
-    const token = req.cookies['_volunteer_token'] || req.cookies['_creator_token'];
-    const userType = req.cookies['_volunteer_token'] ? 'volunteer' : 'creator';
-
-    if (!token) {
-        return res.status(401).json({ loggedIn: false });
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await ((userType === 'volunteer' ? Volunteer : Creator).findById(decoded.userId).select("-password"));
-
-    if (!user) {
-        return res.status(401).json({ loggedIn: false });
-    }
-
-    if (decoded) {
-        return res.status(200).send({ loggedIn: true, userType });
-    }
-
-    return res.status(401).send({ loggedIn: false });
-})
-
 app.listen(PORT, async () => {
     await connectDB();
     console.log(`Server is running on port ${PORT}`);
