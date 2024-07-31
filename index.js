@@ -6,6 +6,8 @@ import cookieParser from "cookie-parser";
 import dotenv from 'dotenv';
 // import cors from 'cors'; // Add this line
 import activityRouter from "./routes/activity.route.js";
+import Volunteer from "../models/volunteer.model.js";
+import Creator from '../models/creator.model.js';
 dotenv.config();
 
 const corsOptions = {
@@ -47,6 +49,25 @@ app.get('/helloworld', (req, res) => {
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
+
+app.use('/api/v1/check_login', async (req, res) => {
+    const token = req.cookies['_volunteer_token'] || req.cookies['_creator_token'];
+    const userType = req.cookies['_volunteer_token'] ? 'volunteer' : 'creator';
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await ((userType==='volunteer'?Volunteer:Creator).findById(decoded.userId).select("-password"));
+
+	if (!user) {
+		return res.status(401).json({ loggedIn: false });
+	}
+
+    if(decoded) {
+        res.status(200).send({loggedIn: true});
+    }
+
+    res.status(401).send({loggedIn: false});
+
+})
 
 app.use("/api/v1/creator", creatorRouter);
 app.use("/api/v1/volunteer", volunteerRouter)
