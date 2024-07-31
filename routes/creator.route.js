@@ -2,7 +2,9 @@ import express from 'express';
 import protectCreator from '../middlewares/creator.middleware.js';
 import { creatorLogin, creatorLogout, creatorRegister } from '../controllers/auth.controller.js';
 import { createActivity, getCreatorActivities, getCreatorActivity, getCreatorInfo, updateCreatorInfo, deleteActivity, updateActivity } from '../controllers/creator.controller.js';
-
+import Volunteer from "./models/volunteer.model.js";
+import Creator from './models/creator.model.js';
+import jwt from 'jsonwebtoken';
 const creatorRouter = express.Router();
 
 // ! Authorization

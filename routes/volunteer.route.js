@@ -2,6 +2,9 @@ import express from 'express';
 import protectVolunteer from '../middlewares/volunteer.middleware.js';
 import { volunteerLogin, volunteerLogout, volunteerRegister } from '../controllers/auth.controller.js';
 import { getVolunteerInfo, updateVolunteerInfo, joinActivity, leaveActivity, getVolunteerActivities } from '../controllers/volunteer.controller.js';
+import Volunteer from "./models/volunteer.model.js";
+import Creator from './models/creator.model.js';
+import jwt from 'jsonwebtoken';
 
 const volunteerRouter = express.Router();
 
