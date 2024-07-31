@@ -72,7 +72,7 @@ app.get('/api/v1/check_login', async (req, res, next) => {
     }
 
     if (decoded) {
-        res.status(200).send({ loggedIn: true });
+        res.status(200).send({ loggedIn: true, userType });
     }
 
     res.status(401).send({ loggedIn: false });
