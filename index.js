@@ -34,7 +34,8 @@ app.use((req, res, next) => {
     // Log incoming requests
     console.log(`${req.method} ${req.originalUrl}`);
 
-    const origin = corsOptions.origin.includes(req.header('origin').toLowerCase()) ? req.headers.origin : corsOptions.default;
+    // const origin = corsOptions.origin.includes(req.header('origin').toLowerCase()) ? req.headers.origin : corsOptions.default;
+    const origin = corsOptions.default;
     res.header("Access-Control-Allow-Origin", origin);
     res.header("Access-Control-Allow-Methods", corsOptions.methods.join(','));
     res.header("Access-Control-Allow-Headers", corsOptions.allowedHeaders.join(','));
