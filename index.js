@@ -6,8 +6,8 @@ import cookieParser from "cookie-parser";
 import dotenv from 'dotenv';
 import cors from 'cors'; // Add this line
 import activityRouter from "./routes/activity.route.js";
-import Volunteer from "../models/volunteer.model.js";
-import Creator from '../models/creator.model.js';
+import Volunteer from "./models/volunteer.model.js";
+import Creator from './models/creator.model.js';
 dotenv.config();
 
 // const corsOptions = {
