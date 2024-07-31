@@ -10,9 +10,9 @@ dotenv.config();
 
 const corsOptions = {
     origin: "https://plantforfuture.netlify.app",
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true // Important for cookies
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin'],
 };
 
 const app = express();
