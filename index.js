@@ -9,7 +9,7 @@ import activityRouter from "./routes/activity.route.js";
 dotenv.config();
 
 const corsOptions = {
-    origin: "https://plantforfuture.netlify.app",
+    origin: ["https://plantforfuture.netlify.app", "http://localhost"],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin'],
