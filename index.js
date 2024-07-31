@@ -11,7 +11,8 @@ import Creator from '../models/creator.model.js';
 dotenv.config();
 
 const corsOptions = {
-    origin: ["http://localhost:3000", "https://plantforfuture.netlify.app"],
+    origin: "https://plantforfuture.netlify.app",
+    // origin: ["http://localhost:3000", "https://plantforfuture.netlify.app"],
     default: "https://plantforfuture.netlify.app",
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -55,17 +56,17 @@ app.get('/api/v1/check_login', async (req, res, next) => {
     const userType = req.cookies['_volunteer_token'] ? 'volunteer' : 'creator';
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await ((userType==='volunteer'?Volunteer:Creator).findById(decoded.userId).select("-password"));
+    const user = await ((userType === 'volunteer' ? Volunteer : Creator).findById(decoded.userId).select("-password"));
 
-	if (!user) {
-		return res.status(401).json({ loggedIn: false });
-	}
-
-    if(decoded) {
-        res.status(200).send({loggedIn: true});
+    if (!user) {
+        return res.status(401).json({ loggedIn: false });
     }
 
-    res.status(401).send({loggedIn: false});
+    if (decoded) {
+        res.status(200).send({ loggedIn: true });
+    }
+
+    res.status(401).send({ loggedIn: false });
 
     next();
 })
