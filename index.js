@@ -4,7 +4,7 @@ import creatorRouter from "./routes/creator.route.js";
 import volunteerRouter from "./routes/volunteer.route.js";
 import cookieParser from "cookie-parser";
 import dotenv from 'dotenv';
-import cors from 'cors'; // Add this line
+import cors from 'cors';
 import activityRouter from "./routes/activity.route.js";
 import Volunteer from "./models/volunteer.model.js";
 import Creator from './models/creator.model.js';
@@ -60,6 +60,10 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
+app.use("/api/v1/creator", creatorRouter);
+app.use("/api/v1/volunteer", volunteerRouter)
+app.use("/api/v1/activity", activityRouter)
+
 app.get('/api/v1/check_login', async (req, res, next) => {
     const token = req.cookies['_volunteer_token'] || req.cookies['_creator_token'];
     const userType = req.cookies['_volunteer_token'] ? 'volunteer' : 'creator';
@@ -79,10 +83,6 @@ app.get('/api/v1/check_login', async (req, res, next) => {
 
     next();
 })
-
-app.use("/api/v1/creator", creatorRouter);
-app.use("/api/v1/volunteer", volunteerRouter)
-app.use("/api/v1/activity", activityRouter)
 
 app.listen(PORT, async () => {
     await connectDB();
