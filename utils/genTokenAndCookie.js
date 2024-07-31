@@ -9,7 +9,7 @@ const generateTokenAndSetCookie = (userId, creator, res) => {
 		maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
 		httpOnly: true,
 		secure: true, // Requires HTTPS
-		sameSite: "None" // Allows cross-site cookies
+		sameSite: "none" // Allows cross-site cookies
 	});
 
 	return token;
