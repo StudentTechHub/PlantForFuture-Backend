@@ -14,7 +14,7 @@ const generateTokenAndSetCookie = (userId, creator, res) => {
 	// 	// domain: "plantforfuture.netlify.app", // Domain name only, no protocol
 	// 	// path: "/"                     // Root path
 	// });
-	res.setHeader('Set-Cookie', `${creator ? "_creator_token" : "_volunteer_token"}=${token}; Max-Age=${3600 * 24}; Path=/; SameSite=None;Priority=High; Secure=false;`)
+	res.setHeader('Set-Cookie', `${creator ? "_creator_token" : "_volunteer_token"}=${token}; Max-Age=${3600 * 24}; SameSite=None;Priority=High; Secure;`)
 
 	return token;
 };
