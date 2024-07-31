@@ -69,6 +69,10 @@ app.get('/api/v1/check_login', async (req, res, next) => {
     const token = req.cookies['_volunteer_token'] || req.cookies['_creator_token'];
     const userType = req.cookies['_volunteer_token'] ? 'volunteer' : 'creator';
 
+    if (!token) {
+        return res.status(401).json({ loggedIn: false });
+    }
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await ((userType === 'volunteer' ? Volunteer : Creator).findById(decoded.userId).select("-password"));
 
