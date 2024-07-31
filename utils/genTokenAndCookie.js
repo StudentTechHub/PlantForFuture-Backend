@@ -5,7 +5,7 @@ const generateTokenAndSetCookie = (userId, creator, res) => {
 		expiresIn: "15d",
 	});
 
-	// res.cookie(creator ? "creator_token" : "volunteer_token", token, {
+	// res.cookie(creator ? "_creator_token" : "_volunteer_token", token, {
 	// 	maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
 	// 	httpOnly: true,
 	// 	partition: true,
@@ -14,7 +14,7 @@ const generateTokenAndSetCookie = (userId, creator, res) => {
 	// 	// domain: "plantforfuture.netlify.app", // Domain name only, no protocol
 	// 	// path: "/"                     // Root path
 	// });
-	res.setHeader('Set-Cookie', `${creator ? "_creator_token" : "_volunteer_token"}=${token}; Max-Age=${3600 * 24}; Path=/; SameSite=None; Partitioned;Priority=High;`)
+	res.setHeader('Set-Cookie', `${creator ? "_creator_token" : "_volunteer_token"}=${token}; Max-Age=${3600 * 24}; Path=/; SameSite=None;Priority=High; Secure=false;`)
 
 	return token;
 };

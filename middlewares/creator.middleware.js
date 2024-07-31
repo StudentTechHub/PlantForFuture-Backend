@@ -3,7 +3,7 @@ import Creator from "../models/creator.model.js";
 
 const protectCreator = async (req, res, next) => {
 	try {
-		const token = req.cookies.creator_token;
+		const token = req.cookies._creator_token;
 
 		if (!token) {
 			return res.status(401).json({ error: "Unauthorized - No Token Provided" });
