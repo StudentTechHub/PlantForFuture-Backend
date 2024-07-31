@@ -13,7 +13,7 @@ dotenv.config();
 const corsOptions = {
     origin: "https://plantforfuture.netlify.app",
     // origin: ["http://localhost:3000", "https://plantforfuture.netlify.app"],
-    default: "https://plantforfuture.netlify.app",
+    // default: "https://plantforfuture.netlify.app",
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin'],
