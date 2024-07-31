@@ -80,7 +80,7 @@ export const creatorLogout = async (req, res) => {
     try {
         return res
             .status(200)
-            .cookie("creator_token", "", { maxAge: 0 })
+            .cookie("_creator_token", "", { maxAge: 0 })
             .json({ message: "Logged out" })
             // .redirect('/joinUs/');
     } catch (error) {
@@ -163,7 +163,7 @@ export const volunteerLogout = async (req, res) => {
     try {
         return res
             .status(200)
-            .cookie("volunteer_token", "", { maxAge: 0 })
+            .cookie("_volunteer_token", "", { maxAge: 0 })
             .json({ message: "Logged out" })
         // .redirect('/joinUs/')
     } catch (error) {
