@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-app.use('/api/v1/check_login', async (req, res, next) => {
+app.get('/api/v1/check_login', async (req, res, next) => {
     const token = req.cookies['_volunteer_token'] || req.cookies['_creator_token'];
     const userType = req.cookies['_volunteer_token'] ? 'volunteer' : 'creator';
 
