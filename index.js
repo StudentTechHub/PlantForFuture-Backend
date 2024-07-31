@@ -12,7 +12,7 @@ const corsOptions = {
     origin: "https://plantforfuture.netlify.app",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
+    credentials: true // Important for cookies
 };
 
 const app = express();

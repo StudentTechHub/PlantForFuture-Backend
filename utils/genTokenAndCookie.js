@@ -10,7 +10,7 @@ const generateTokenAndSetCookie = (userId, creator, res) => {
 		httpOnly: true,
 		secure: true, // Requires HTTPS
 		sameSite: "none", // Allows cross-site cookies
-		domain: "plantforfuture.netlify.app",    // Ensure domain matches
+		// domain: "plantforfuture.netlify.app", // Domain name only, no protocol
 		path: "/"                     // Root path
 	});
 
