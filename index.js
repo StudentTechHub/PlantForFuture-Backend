@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-app.use('/api/v1/check_login', async (req, res) => {
+app.use('/api/v1/check_login', async (req, res, next) => {
     const token = req.cookies['_volunteer_token'] || req.cookies['_creator_token'];
     const userType = req.cookies['_volunteer_token'] ? 'volunteer' : 'creator';
 
@@ -67,6 +67,7 @@ app.use('/api/v1/check_login', async (req, res) => {
 
     res.status(401).send({loggedIn: false});
 
+    next();
 })
 
 app.use("/api/v1/creator", creatorRouter);
